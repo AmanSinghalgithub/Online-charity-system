@@ -1,0 +1,72 @@
+<%- include('headeradmin'); -%>
+<div style="margin-left: 60px;" class="col-md-11 content">
+    <table  id="example" class="table table-striped">
+        <thead>
+          <tr>
+            <th>Donor Name</th>
+            <th>Amount</th>
+            <th>Purpose</th>
+            <th>Address</th>
+            <th>Cell No.</th>
+            <th>Date</th>
+            <th>Payment Status</th>
+            <th>Payment Type</th>
+          </tr>
+        </thead>
+      </thead>
+      <tbody>
+     <p id="error">
+     </p>
+     <% 
+     var i;
+     if(audata.length!=0){
+         
+         audata.forEach(function(data){
+         i+=data.d_amount;
+         %>
+         <tr>
+            <td><%=data.d_name %></td>
+            <td id="amt"><%=data.d_amount %></td>
+            <td><%=data.d_purpose %></td>
+            <td><%=data.d_addr %></td>
+            <td><%=data.d_cell %></td>
+            <td><%=data.d_date %></td>
+            <td><%=data.d_pay %></td>
+            <td><%=data.d_paytype %></td>
+    </tr>
+    <%
+   })
+}
+    %>
+
+</tbody>
+</table>
+<p>
+Total Amount = <b id='total'></b> Rs.
+</p>
+</div>
+
+<script>
+    
+$(document).ready(function(){
+$('.navbar ul li.active').removeClass("active");
+$('.navbar ul li:nth-child(1)').addClass("active");
+$("form").submit(function(e){
+  $sdate = new  Date( $("input:first").val() );
+  $edate = new Date( $("input:odd").val() );
+  if($sdate > $edate) {
+    e.preventDefault();
+    $('p#error').text("Date range is invalid").show().fadeOut(2101);
+  }
+});
+
+var TotalValue=0;
+$("tr #amt").each(function(index,value){
+    currentRow = parseFloat($(this).text());
+    TotalValue+=currentRow
+});
+    $('#total').html(TotalValue);
+});
+</script>
+</body>
+</html>

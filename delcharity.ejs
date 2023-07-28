@@ -1,0 +1,65 @@
+<%- include('header'); -%>
+<style type="text/css">   
+html,body {
+    background-color: RGB(52, 73, 94);
+  }</style>
+           <div style="margin-left: 60px;" class="col-md-11 content">
+            <% if(smsg.length>0) { %>
+              <div class="alert alert-success"><%=smsg %></div>
+              <% } %>
+              <% if(emsg.length>0) { %>
+                <div class="alert alert-danger"><%=emsg %></div>
+                <% } %>
+                <% if(scmsg.length>0) { %>
+                  <div class="alert alert-success"><%=scmsg %></div>
+                  <% } %>
+               <div>
+                
+               <form class="form-inline" method="post" action="/delcharity" >
+               <table  id="example" class="table table-striped">
+                   <thead>
+                     <tr>
+                      <th></th>
+                       <th>Name of charity</th>
+                       <th>Purpose</th>
+                       <th>Src</th>
+                     </tr>
+                   </thead>
+                 </thead>
+                 <tbody>
+                    
+                     
+                    <% 
+                    if(ddata.length!=0){
+                        ddata.forEach(function(data){
+                        %>
+                                 <tr>
+                                        <td>
+                                          <input type="checkbox" name="selected[]"  value=<%=data.id %> />
+                                        </td>
+                                         <td><%=data.name %></td>
+                                         <td><%=data.purpose %></td>
+                                         <td><%=data.cover %></td>
+                                 </tr>
+                                 <%
+                                })
+                            }
+                                 %>
+                             
+                 </tbody>
+                 </table>
+                 <input type="submit" class="btn btn-primary btn-md"
+                        value="delete" name="delete">
+               </form>
+               </div>
+           </div>
+       <script>
+       $(document).ready(function(){
+           $('.navbar ul li.active').removeClass("active");
+           $('.navbar ul li:nth-child(3)').addClass("active");
+       });
+       
+       </script>
+     </body>
+  </html>
+  

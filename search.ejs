@@ -1,0 +1,109 @@
+<%- include('nologinheader'); -%>
+<head>
+    <style>
+    html,body {
+  background-color: RGB(52, 73, 94);
+}
+button{
+    float:right
+}
+</style>
+    
+</head>
+<body>
+<div style="margin-left: 60px;" class="col-md-11 content">
+    <% if(msg.length>0) { %>
+        <div class="alert alert-success"><%=msg %></div>
+        <% } %>
+        <% if(emsg.length>0) { %>
+          <div class="alert alert-danger"><%=emsg %></div>
+          <% } %>
+          <% if(eemsg.length>0) { %>
+            <div class="alert alert-success"><%=eemsg %></div>
+            <% } %>
+        <form class="form-inline" method="post" action="/search" >
+          <div class="form-group">
+            <input class="form-control" type="text" required placeholder="Enter Invoice id" name="invoiceid">
+           </div>
+            <div class="form-group">
+            <input class="form-control" type="text" required placeholder="Enter Doner Name" name="d_name">
+           </div>
+           <input type="submit" name='but' class="btn btn-primary btn-md" value="Search">
+           </input>
+          </form>
+    <table  id="example" class="table table-striped">
+        <thead>
+          <tr>
+            <th>Donor Name</th>
+            <th>Amount</th>
+            <th>Purpose</th>
+            <th>Address</th>
+            <th>Cell No.</th>
+            <th>Date</th>
+            <th>Payment Status</th>
+            <th>Payment Type</th>
+            <th>Invoice</th>
+          </tr>
+        </thead>
+      </thead>
+      <tbody>
+     <p id="error">
+     </p>
+     <% 
+     var i;
+     if(myd){
+         
+         mydata.forEach(function(data){
+         i+=data.d_amount;
+         %>
+         <tr>
+            <td><%=data.d_name %></td>
+            <td id="amt"><%=data.d_amount %></td>
+            <td><%=data.d_purpose %></td>
+            <td><%=data.d_addr %></td>
+            <td><%=data.d_cell %></td>
+            <td><%=data.d_date %></td>
+            <td><%=data.d_pay %></td>
+            <td><%=data.d_paytype %></td>
+            <% if(data.d_pay=='Paid'){ %>
+            <td><a href=<%="/invoice/"+data.d_id + ".pdf" %> download>INVOICE</a></td>
+            <% } 
+            else{
+            %>
+            <td>please pay first to generate invoice</td>
+            <% }%>
+            
+    </tr>
+    <%
+   })
+}
+else{
+    %>
+    <tr><td>No data available</td></tr>
+  <% } %>
+
+</tbody>
+</table>
+<p>
+Total Amount = <b id='total'></b> Rs.
+</p>
+</div>
+
+<script>
+
+$(document).ready(function(){
+    $('.navbar ul li.active').removeClass("active");
+         $('.navbar ul li:nth-child(2)').addClass("active");
+         $('#example').DataTable();
+});
+        $('#example').DataTable();
+var TotalValue=0;
+$("tr #amt").each(function(index,value){
+    currentRow = parseFloat($(this).text());
+    TotalValue+=currentRow
+});
+    $('#total').html(TotalValue);
+
+</script>
+</body>
+</html>

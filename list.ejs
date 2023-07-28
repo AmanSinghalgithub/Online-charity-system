@@ -1,0 +1,57 @@
+<%- include('headeradmin'); -%>
+<div style="margin-left: 60px;" class="col-md-11 content">
+  <% if(msg.length>0) { %>
+    <div class="alert alert-success"><%=msg %></div>
+    <% } %>
+    <% if(smsg.length>0) { %>
+      <div class="alert alert-success"><%=smsg %></div>
+      <% } %>
+          <div>
+             <table  id="example" class="table table-striped">
+                 <thead>
+                   <tr>
+                     <th>Name of charity</th>
+                     <th>Purpose</th>
+                     <th>Founder</th>
+                     <th>Cover</th>
+                   </tr>
+                 </thead>
+               </thead>
+               <tbody>
+              <p id="error">
+              </p>
+              <% 
+              if(lddata.length!=0){
+                  lddata.forEach(function(data){
+                  %>
+               
+                               <tr>
+                                       <td><%=data.name %></td>
+                                       <td><%=data.purpose %></td>
+                                       <td><%=data.founder %></td>
+                                       <td><%=data.cover %></td>
+                               </tr>
+                               <%
+                                })
+                            }
+                                 %>
+               </tbody>
+               </table>
+             </div>
+         </div>
+     <script>
+     $(document).ready(function(){
+         $('.navbar ul li.active').removeClass("active");
+         $('.navbar ul li:nth-child(3)').addClass("active");
+         $("form").submit(function(e){
+           $sdate = new  Date( $("input:first").val() );
+           $edate = new Date( $("input:odd").val() );
+           if($sdate > $edate) {
+             e.preventDefault();
+             $('p#error').text("Date range is invalid").show().fadeOut(2101);
+           }
+         });
+     });
+     </script>
+   </body>
+</html>

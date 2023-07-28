@@ -1,0 +1,79 @@
+<%- include('header'); -%>
+<style>
+    html,body {
+    background-color: RGB(52, 73, 94);
+  }
+  </style>
+           <div style="margin-left: 60px;" class="col-md-11 content">
+               <div>
+               <table  id="example" class="table table-striped">
+                   <thead>
+                     <tr>
+                       <th>Donor Name</th>
+                       <th>Amount</th>
+                       <th>Purpose</th>
+                       <th>Address</th>
+                       <th>Cell No.</th>
+                       <th>Date</th>
+                       <th>Payment Status</th>
+                       <th>Payment Type</th>
+                       
+                     </tr>
+                   </thead>
+                 </thead>
+                 <tbody>
+                <p id="error">
+                </p>
+                <% 
+                var i;
+                if(udata.length!=0){
+                    
+                    udata.forEach(function(data){
+                    i+=data.d_amount;
+                    %>
+                
+                                 <tr>
+                                         <td><%=data.d_name %></td>
+                                         <td id="amt"><%=data.d_amount %></td>
+                                         <td><%=data.d_purpose %></td>
+                                         <td><%=data.d_addr %></td>
+                                         <td><%=data.d_cell %></td>
+                                         <td><%=data.d_date %></td>
+                                         <td><%=data.d_pay %></td>
+                                         <td><%=data.d_paytype %></td>
+                                 </tr>
+                                 <%
+                                })
+                            }
+                                 %>
+                             
+                 </tbody>
+                 </table>
+                 <p>
+                   Total Amount = <b id="total"></b> Rs.
+                 </p>
+               </div>
+           </div>
+       <script>
+       $(document).ready(function(){
+           $('.navbar ul li.active').removeClass("active");
+           $('.navbar ul li:nth-child(2)').addClass("active");
+           //check two dates
+           $("form").submit(function(e){
+             $sdate = new  Date( $("input:first").val() );
+             $edate = new Date( $("input:odd").val() );
+             if($sdate > $edate) {
+               e.preventDefault();
+               $('p#error').text("Date range is invalid").show().fadeOut(2101);
+             }
+           });
+           var TotalValue=0;
+$("tr #amt").each(function(index,value){
+    currentRow = parseFloat($(this).text());
+    TotalValue+=currentRow
+});
+    $('#total').html(TotalValue);
+       });
+       </script>
+     </body>
+  </html>

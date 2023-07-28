@@ -1,0 +1,57 @@
+<%- include('headeradmin'); -%>
+<div style="margin-left: 60px;" class="col-md-11 content">
+  <% if(msg.length>0) { %>
+    <div class="alert alert-danger"><%=msg %></div>
+    <% } %>
+             <div>
+             <form class="form-inline" method="post" action="/doner" >
+             <table  id="example" class="table table-striped">
+                 <thead>
+                   <tr>
+                    <th></th>
+                     <th>founder</th>
+                     <th>Name of charity</th>
+                     <th>Purpose</th>
+                     <th>Src</th>
+                   </tr>
+                 </thead>
+               </thead>
+               <tbody>
+                <% 
+                
+                if(acdata.length!=0){
+                    acdata.forEach(function(data){
+
+                    %>
+                       
+                               <tr>
+                                      <td>
+                                        <input type="checkbox" name="selected[]"
+                                          value=<%=data.id %> />
+                                      </td>
+                                       <td><%=data.founder %></td>
+                                       <td><%=data.name %></td>
+                                       <td><%=data.purpose %></td>
+                                       <td><%=data.cover %></td>
+                               </tr>
+                               <%
+                                })
+                            }
+                                 %>
+                          
+               </tbody>
+               </table>
+               <input type="submit" class="btn btn-primary btn-md"
+                      value="Accept" name="makePaid">
+             </form>
+             </div>
+         </div>
+     </div>
+     <script>
+     $(document).ready(function(){
+         $('.navbar ul li.active').removeClass("active");
+         $('.navbar ul li:nth-child(2)').addClass("active");
+     });
+     </script>
+   </body>
+</html>
